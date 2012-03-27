@@ -5,7 +5,7 @@ class AutoWatchHook < Redmine::Hook::Listener
     unless @issue.watched_by?(User.current) || @issue.author == User.current
       @issue.add_watcher(User.current)
     end
-    unless @issue.assigned_to == nil || @issue.watched_by?(@issue.assigned_to) || @issue.author == @issue.assigned_to
+    unless @issue.assigned_to == nil || (not @issue.assigned_to === User) || @issue.watched_by?(@issue.assigned_to) || @issue.author == @issue.assigned_to
       @issue.add_watcher(@issue.assigned_to)
     end
   end
